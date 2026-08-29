@@ -33,10 +33,15 @@ const sans = Noto_Sans_KR({
 const title = `${WEDDING.groom.firstName} ♥ ${WEDDING.bride.firstName} 결혼합니다`;
 const description = `${WEDDING.dateLabelKo} · ${WEDDING.venue.name}`;
 
+// 빈 문자열 env도 걸러내고, Vercel이 자동 주입하는 프로덕션 URL을 폴백으로 사용
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_PROJECT_PRODUCTION_URL
+    ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
+    : "http://localhost:3000");
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000",
-  ),
+  metadataBase: new URL(siteUrl),
   title,
   description,
   openGraph: {
