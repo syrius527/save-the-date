@@ -1,0 +1,3 @@
+allowBuilds:
+  jpegtran-bin: true
+  sharp: false
