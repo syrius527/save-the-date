@@ -1,0 +1,27 @@
+node_modules/
+.next/
+out/
+build/
+.DS_Store
+*.pem
+npm-debug.log*
+.env
+.env.local
+.env.*.local
+.vercel
+*.tsbuildinfo
+next-env.d.ts
+
+# 커버 영상 원본(67MB) — 서빙은 reel-web.mp4만 사용, 리포·배포에서 제외
+public/cover/reel.mp4
+
+# ep-memory: local session data (machine-specific)
+.ep-memory/turns/
+.ep-memory/sessions/
+.ep-memory/index.db
+
+# Optionally commit MEMORY.md for shared team knowledge:
+# !.ep-memory/MEMORY.md
+
+# ep-memory 플러그인 로컬 데이터 (내장 git 리포)
+.ep-memory/
