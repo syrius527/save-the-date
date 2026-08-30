@@ -312,9 +312,11 @@ export function EntryOut({ entry }: { entry: GuestbookEntryDTO }) {
           {entry.photos.length > 0 && ` · 📷 ${entry.photos.length}`}
         </Dim>
       </Ln>
-      <Ln indent={1}>
-        <span style={{ whiteSpace: "pre-wrap" }}>{entry.message}</span>
-      </Ln>
+      {entry.message && (
+        <Ln indent={1}>
+          <span style={{ whiteSpace: "pre-wrap" }}>{entry.message}</span>
+        </Ln>
+      )}
     </div>
   );
 }

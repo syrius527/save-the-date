@@ -35,7 +35,8 @@ function formatDate(iso: string): string {
   }
 }
 
-const THUMBS_SHOWN = 4;
+// 게스트 스냅: 사진이 히어로, 이름·메시지는 캡션
+const THUMBS_SHOWN = 6;
 
 function EntryCard({
   entry,
@@ -51,33 +52,17 @@ function EntryCard({
         background: "var(--bg2)",
         border: "1px solid var(--line)",
         borderRadius: 14,
-        padding: "15px 16px",
+        padding: "13px 14px 12px",
       }}
     >
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "baseline",
-        }}
-      >
-        <div style={{ fontSize: 13, fontWeight: 600 }}>{entry.name}</div>
-        <div style={{ fontSize: 10.5, color: "var(--sub)" }}>
-          {formatDate(entry.createdAt)}
-        </div>
-      </div>
-      <div
-        style={{
-          fontSize: 13,
-          lineHeight: 1.7,
-          marginTop: 6,
-          whiteSpace: "pre-wrap",
-        }}
-      >
-        {entry.message}
-      </div>
       {entry.photos.length > 0 && (
-        <div style={{ display: "flex", gap: 6, flexWrap: "wrap", marginTop: 10 }}>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3,minmax(0,1fr))",
+            gap: 5,
+          }}
+        >
           {entry.photos.slice(0, THUMBS_SHOWN).map((p, i) => (
             <button
               key={p.key}
@@ -85,8 +70,7 @@ function EntryCard({
               aria-label="사진 크게 보기"
               style={{
                 position: "relative",
-                width: 72,
-                height: 72,
+                aspectRatio: "1",
                 borderRadius: 8,
                 overflow: "hidden",
                 border: "none",
@@ -99,7 +83,7 @@ function EntryCard({
                 src={p.url}
                 alt=""
                 fill
-                sizes="144px"
+                sizes="(max-width: 430px) 30vw, 120px"
                 style={{ objectFit: "cover" }}
               />
               {i === THUMBS_SHOWN - 1 && extra > 0 && (
@@ -121,6 +105,32 @@ function EntryCard({
               )}
             </button>
           ))}
+        </div>
+      )}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "baseline",
+          marginTop: entry.photos.length > 0 ? 10 : 0,
+        }}
+      >
+        <div style={{ fontSize: 12.5, fontWeight: 600 }}>{entry.name}</div>
+        <div style={{ fontSize: 10.5, color: "var(--sub)" }}>
+          {formatDate(entry.createdAt)}
+        </div>
+      </div>
+      {entry.message && (
+        <div
+          style={{
+            fontSize: 12.5,
+            lineHeight: 1.65,
+            marginTop: 4,
+            whiteSpace: "pre-wrap",
+            color: "var(--sub)",
+          }}
+        >
+          {entry.message}
         </div>
       )}
     </div>
@@ -162,9 +172,13 @@ export default function GuestbookSection({
     (u) => u.status === "signing" || u.status === "uploading",
   );
   const hasFailed = uploads.some((u) => u.status === "error");
+  const doneCount = uploads.filter(
+    (u) => u.status === "done" && u.key,
+  ).length;
+  // 사진이 메인, 메시지는 덤 — 둘 중 하나만 있으면 등록 가능
   const canSubmit =
     name.trim().length > 0 &&
-    msg.trim().length > 0 &&
+    (doneCount > 0 || msg.trim().length > 0) &&
     !uploading &&
     !hasFailed &&
     !submitting;
@@ -249,7 +263,7 @@ export default function GuestbookSection({
             color: "var(--accent)",
           }}
         >
-          GUESTBOOK
+          GUEST SNAP
         </div>
         <h2
           style={{
@@ -259,7 +273,7 @@ export default function GuestbookSection({
             margin: "12px 0 8px",
           }}
         >
-          방명록
+          게스트 스냅
         </h2>
         <p
           style={{
@@ -269,9 +283,9 @@ export default function GuestbookSection({
             margin: 0,
           }}
         >
-          축하 메시지와 함께, 직접 찍어주신 사진도
+          하객님의 렌즈에 담긴 오늘의 저희를 남겨주세요.
           <br />
-          남겨주시면 소중히 간직할게요.
+          축하 한마디는 덤이에요.
         </p>
       </div>
 
@@ -286,6 +300,16 @@ export default function GuestbookSection({
           gap: 10,
         }}
       >
+        <PhotoPicker
+          count={uploads.length}
+          disabled={submitting}
+          onFiles={onFiles}
+        />
+        <UploadProgress
+          items={uploads}
+          onRemove={(id) => pool().remove(id)}
+          onRetry={(id) => pool().retry(id)}
+        />
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
@@ -296,8 +320,8 @@ export default function GuestbookSection({
         <textarea
           value={msg}
           onChange={(e) => setMsg(e.target.value)}
-          placeholder="축하 메시지를 남겨주세요"
-          rows={3}
+          placeholder="축하 한마디 (선택)"
+          rows={2}
           maxLength={500}
           style={{ ...inputStyle, resize: "none", lineHeight: 1.6 }}
         />
@@ -311,11 +335,6 @@ export default function GuestbookSection({
           aria-hidden="true"
           style={{ position: "absolute", left: -9999, width: 1, height: 1 }}
         />
-        <UploadProgress
-          items={uploads}
-          onRemove={(id) => pool().remove(id)}
-          onRetry={(id) => pool().retry(id)}
-        />
         {rejections.length > 0 && (
           <div style={{ fontSize: 11.5, color: "#b0503f", lineHeight: 1.6 }}>
             {rejections.map((r, i) => (
@@ -328,35 +347,27 @@ export default function GuestbookSection({
         {error && (
           <div style={{ fontSize: 11.5, color: "#b0503f" }}>{error}</div>
         )}
-        <div style={{ display: "flex", gap: 8 }}>
-          <PhotoPicker
-            count={uploads.length}
-            disabled={submitting}
-            onFiles={onFiles}
-          />
-          <button
-            onClick={submit}
-            disabled={!canSubmit}
-            style={{
-              flex: 1,
-              padding: "11px 0",
-              borderRadius: 10,
-              border: "none",
-              background: "var(--accent)",
-              color: "#fff",
-              fontSize: 12.5,
-              fontWeight: 500,
-              cursor: canSubmit ? "pointer" : "default",
-              opacity: canSubmit ? 1 : 0.55,
-            }}
-          >
-            {submitting
-              ? "남기는 중…"
-              : uploading
-                ? "사진 올리는 중…"
-                : "남기기"}
-          </button>
-        </div>
+        <button
+          onClick={submit}
+          disabled={!canSubmit}
+          style={{
+            padding: "12px 0",
+            borderRadius: 10,
+            border: "none",
+            background: "var(--accent)",
+            color: "#fff",
+            fontSize: 13,
+            fontWeight: 500,
+            cursor: canSubmit ? "pointer" : "default",
+            opacity: canSubmit ? 1 : 0.55,
+          }}
+        >
+          {submitting
+            ? "올리는 중…"
+            : uploading
+              ? "사진 올리는 중…"
+              : "올리기"}
+        </button>
         {hasFailed && (
           <div style={{ fontSize: 11.5, color: "#b0503f" }}>
             실패한 사진이 있어요. ⟳ 버튼으로 다시 시도하거나 ×로 제거해주세요.
@@ -371,7 +382,7 @@ export default function GuestbookSection({
           flexDirection: "column",
           gap: 10,
           marginTop: 16,
-          maxHeight: "34dvh",
+          maxHeight: "32dvh",
         }}
       >
         {entries.length === 0 && (
@@ -383,7 +394,7 @@ export default function GuestbookSection({
               padding: "22px 0",
             }}
           >
-            아직 메시지가 없어요. 첫 번째 축하를 남겨주세요!
+            아직 올라온 사진이 없어요. 오늘의 첫 순간을 남겨주세요!
           </div>
         )}
         {entries.map((e) => (
@@ -407,7 +418,7 @@ export default function GuestbookSection({
               cursor: "pointer",
             }}
           >
-            {loadingMore ? "불러오는 중…" : "이전 메시지 더 보기"}
+            {loadingMore ? "불러오는 중…" : "이전 스냅 더 보기"}
           </button>
         )}
       </div>

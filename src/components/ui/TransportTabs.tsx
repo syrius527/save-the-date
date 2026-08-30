@@ -50,7 +50,7 @@ export default function TransportTabs({
           fontSize: 13,
           lineHeight: 1.7,
           textAlign: "left",
-          minHeight: 76, // 탭 전환 시 섹션 높이 흔들림 방지
+          minHeight: 168, // 탭 전환 시 섹션 높이 흔들림 방지 (대중교통 탭 기준)
         }}
       >
         {rows.map((row) => (
@@ -58,14 +58,42 @@ export default function TransportTabs({
             <div
               style={{
                 flex: "none",
-                width: 52,
+                width: 60,
                 fontWeight: 600,
                 color: "var(--accent)",
               }}
             >
               {row.label}
             </div>
-            <div style={{ color: "var(--sub)" }}>{row.body}</div>
+            <div style={{ color: "var(--sub)" }}>
+              {row.body}
+              {row.links && (
+                <div
+                  style={{
+                    display: "flex",
+                    gap: 12,
+                    marginTop: 4,
+                    flexWrap: "wrap",
+                  }}
+                >
+                  {row.links.map((l) => (
+                    <a
+                      key={l.label}
+                      href={l.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      style={{
+                        color: "var(--accent)",
+                        textDecoration: "underline",
+                        fontSize: 12,
+                      }}
+                    >
+                      {l.label}
+                    </a>
+                  ))}
+                </div>
+              )}
+            </div>
           </div>
         ))}
       </div>

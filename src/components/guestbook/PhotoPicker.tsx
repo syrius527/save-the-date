@@ -2,6 +2,7 @@
 
 import { useRef } from "react";
 
+// 게스트 스냅의 주인공: 크고 명확한 사진 업로드 영역
 export default function PhotoPicker({
   count,
   disabled,
@@ -32,18 +33,26 @@ export default function PhotoPicker({
         disabled={disabled}
         onClick={() => inputRef.current?.click()}
         style={{
-          flex: 1,
-          textAlign: "center",
-          padding: "11px 0",
-          borderRadius: 10,
-          border: "1px dashed var(--sub)",
+          width: "100%",
+          padding: "18px 12px",
+          borderRadius: 12,
+          border: "1.5px dashed var(--sub)",
           background: "none",
-          fontSize: 12,
           color: "var(--sub)",
+          fontSize: 13,
+          lineHeight: 1.6,
           cursor: "pointer",
         }}
       >
-        📎 사진 첨부{count > 0 ? ` (${count}장)` : ""}
+        📷{" "}
+        {count > 0
+          ? `${count}장 담김 — 눌러서 더 추가하기`
+          : "본식에서 찍은 사진을 올려주세요"}
+        {count === 0 && (
+          <div style={{ fontSize: 11, marginTop: 2, opacity: 0.85 }}>
+            여러 장 가능 · 원본 화질 그대로 저장돼요
+          </div>
+        )}
       </button>
     </>
   );

@@ -4,7 +4,8 @@
 create table if not exists guestbook_entries (
   id uuid primary key default gen_random_uuid(),
   name text not null check (char_length(name) between 1 and 20),
-  message text not null check (char_length(message) between 1 and 500),
+  -- 게스트 스냅: 사진이 메인이라 메시지는 비워둘 수 있음
+  message text not null default '' check (char_length(message) <= 500),
   ip_hash text,
   created_at timestamptz not null default now()
 );

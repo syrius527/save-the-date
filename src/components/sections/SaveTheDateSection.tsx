@@ -72,7 +72,7 @@ export default function SaveTheDateSection() {
           letterSpacing: 0.5,
         }}
       >
-        Saturday, October 24, 2026
+        Saturday, October 24, 2026 · 6 PM
       </div>
       <Countdown targetISO={WEDDING.dateISO} />
     </section>

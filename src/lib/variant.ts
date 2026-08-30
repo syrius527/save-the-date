@@ -8,6 +8,7 @@ export function resolveVariant(to: string | undefined): Variant {
 export interface TransportRow {
   label: string;
   body: string;
+  links?: { label: string; href: string }[];
 }
 
 export interface VariantConfig {
@@ -30,10 +31,30 @@ const CAR_ROWS: TransportRow[] = [
   },
 ];
 
-const SHUTTLE_ROW: TransportRow = {
-  label: "셔틀",
-  body: "광나루역 · 강변역에서 워커힐 셔틀버스 수시 운행",
-};
+const SHUTTLE_ROWS: TransportRow[] = [
+  {
+    label: "셔틀",
+    body: "강변역 1번 출구 · 광나루역 2번 출구 부근에서 탑승, 15분 간격 운행",
+  },
+  {
+    label: "소요",
+    body: "강변역에서 약 15분, 광나루역에서 약 8분 소요",
+  },
+  {
+    label: "탑승 위치",
+    body: "정확한 승차 지점은 지도에서 확인해주세요",
+    links: [
+      {
+        label: "강변역 1번 출구 ↗",
+        href: "https://map.kakao.com/link/search/강변역 1번출구",
+      },
+      {
+        label: "광나루역 2번 출구 ↗",
+        href: "https://map.kakao.com/link/search/광나루역 2번출구",
+      },
+    ],
+  },
+];
 
 // TODO: 실제 문구로 교체 (지인/친인척별 인사말·전세버스 안내)
 export const VARIANTS: Record<Variant, VariantConfig> = {
@@ -52,9 +73,9 @@ export const VARIANTS: Record<Variant, VariantConfig> = {
       transit: [
         {
           label: "지하철",
-          body: "5호선 광나루역 2번 출구 → 호텔 셔틀버스 이용",
+          body: "2호선 강변역 또는 5호선 광나루역 하차 후 셔틀버스 이용",
         },
-        SHUTTLE_ROW,
+        ...SHUTTLE_ROWS,
       ],
     },
   },
@@ -74,7 +95,7 @@ export const VARIANTS: Record<Variant, VariantConfig> = {
           label: "전세버스",
           body: "가족분들을 위한 전세버스가 준비됩니다 (출발 장소·시간 추후 안내)",
         },
-        SHUTTLE_ROW,
+        ...SHUTTLE_ROWS,
       ],
     },
   },
