@@ -61,7 +61,7 @@ export default async function Page({
           <AboutSection />
           <SaveTheDateSection />
           <GallerySection images={galleryImages} />
-          <LocationSection transportRows={vc.transportRows} />
+          <LocationSection transport={vc.transport} />
           <AccountsSection />
           <GuestbookSection
             initialEntries={guestbook.entries}

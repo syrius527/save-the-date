@@ -51,7 +51,7 @@ export default function AccountsSection() {
         </p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-        <Accordion title="신랑측 계좌번호" rows={ACCOUNTS.groom} defaultOpen />
+        <Accordion title="신랑측 계좌번호" rows={ACCOUNTS.groom} />
         <Accordion title="신부측 계좌번호" rows={ACCOUNTS.bride} />
       </div>
     </section>

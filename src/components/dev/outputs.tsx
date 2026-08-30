@@ -146,7 +146,10 @@ export function CalendarOut() {
 }
 
 export function LocationOut() {
-  const rows = VARIANTS.friend.transportRows;
+  const rows = [
+    ...VARIANTS.friend.transport.transit,
+    ...VARIANTS.friend.transport.car,
+  ];
   return (
     <div>
       <Ln color={T.green}>📍 {WEDDING.venue.name}</Ln>

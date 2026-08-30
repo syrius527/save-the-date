@@ -4,6 +4,7 @@ import {
   createContext,
   useCallback,
   useContext,
+  useEffect,
   useRef,
   useState,
 } from "react";
@@ -39,6 +40,29 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       if (!next && v.paused) v.play().catch(() => {});
     }
     setMuted(next);
+  }, []);
+
+  // 기본 사운드 ON: 브라우저 자동재생 정책상 음소거로 시작해야 하므로,
+  // 첫 사용자 제스처(터치/클릭)에서 자동으로 소리를 켠다
+  useEffect(() => {
+    const unmuteOnFirstGesture = () => {
+      if (!mutedRef.current) return;
+      mutedRef.current = false;
+      const v = videoRef.current;
+      if (v) {
+        v.muted = false;
+        if (v.paused) v.play().catch(() => {});
+      }
+      setMuted(false);
+    };
+    document.addEventListener("pointerdown", unmuteOnFirstGesture, {
+      once: true,
+      capture: true,
+    });
+    return () =>
+      document.removeEventListener("pointerdown", unmuteOnFirstGesture, {
+        capture: true,
+      });
   }, []);
 
   return (

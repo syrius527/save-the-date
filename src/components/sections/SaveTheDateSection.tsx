@@ -1,6 +1,8 @@
+import Image from "next/image";
 import { FONT, WEDDING } from "@/lib/constants";
 import Calendar from "../ui/Calendar";
 import Countdown from "../ui/Countdown";
+import datePhoto from "@/assets/photos/couple2.jpg";
 
 export default function SaveTheDateSection() {
   return (
@@ -27,33 +29,52 @@ export default function SaveTheDateSection() {
       >
         SAVE THE DATE
       </div>
+      {/* 흑백 스냅 사진 — 에디토리얼 무드 */}
+      <div
+        style={{
+          width: 126,
+          aspectRatio: `${datePhoto.width} / ${datePhoto.height}`,
+          position: "relative",
+          overflow: "hidden",
+          marginTop: 24,
+        }}
+      >
+        <Image
+          src={datePhoto}
+          alt=""
+          fill
+          placeholder="blur"
+          sizes="126px"
+          style={{ objectFit: "cover", filter: "grayscale(1)" }}
+        />
+      </div>
       <div
         style={{
           fontFamily: FONT.display,
-          fontSize: 44,
-          fontWeight: 400,
-          margin: "10px 0 2px",
-          letterSpacing: 2,
+          fontStyle: "italic",
+          fontSize: 22,
+          marginTop: 22,
+          letterSpacing: 1,
         }}
       >
-        10 · 24
+        October.
+      </div>
+      <div style={{ marginTop: 12 }}>
+        <Calendar />
       </div>
       <div
         style={{
-          fontSize: 12.5,
+          fontFamily: FONT.display,
+          fontStyle: "italic",
+          fontSize: 13.5,
           color: "var(--sub)",
-          letterSpacing: 1,
-          marginBottom: 26,
+          marginTop: 16,
+          letterSpacing: 0.5,
         }}
       >
-        {WEDDING.dateLabelKo}
+        Saturday, October 24, 2026
       </div>
-      <Calendar />
-      <Countdown
-        targetISO={WEDDING.dateISO}
-        groomName={WEDDING.groom.firstName}
-        brideName={WEDDING.bride.firstName}
-      />
+      <Countdown targetISO={WEDDING.dateISO} />
     </section>
   );
 }

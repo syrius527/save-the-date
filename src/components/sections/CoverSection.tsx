@@ -124,11 +124,11 @@ export default function CoverSection({
             lineHeight: 1.25,
           }}
         >
-          {WEDDING.groom.en}{" "}
+          {WEDDING.bride.en}{" "}
           <span style={{ fontStyle: "italic", fontSize: 24, opacity: 0.8 }}>
             and
           </span>{" "}
-          {WEDDING.bride.en}
+          {WEDDING.groom.en}
         </div>
         <div
           style={{

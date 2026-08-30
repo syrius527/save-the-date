@@ -25,3 +25,4 @@ public/cover/reel.mp4
 
 # ep-memory 플러그인 로컬 데이터 (내장 git 리포)
 .ep-memory/
+.env*

@@ -117,3 +117,10 @@ textarea:focus {
     opacity: 1;
   }
 }
+
+/* 라이트박스가 열려 있는 동안 사운드 토글 숨김 (닫기 × 버튼과 겹침 방지) */
+[data-lightbox-open] .soundToggleWrap {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+}

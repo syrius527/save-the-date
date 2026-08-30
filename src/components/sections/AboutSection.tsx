@@ -1,6 +1,6 @@
 import Image, { type StaticImageData } from "next/image";
 import { FONT, WEDDING } from "@/lib/constants";
-import groomChild from "@/assets/photos/groom-child.jpg";
+import groomChild from "@/assets/photos/groom-child.jpeg";
 import brideChild from "@/assets/photos/bride-child.jpeg";
 
 function Person({

@@ -237,6 +237,12 @@ export default function Lightbox({
     return () => window.removeEventListener("keydown", onKey);
   }, [index, items.length, onClose, onIndex]);
 
+  // 열려 있는 동안 페이지의 사운드 토글을 숨긴다 (× 버튼과 겹침 방지)
+  useEffect(() => {
+    document.documentElement.setAttribute("data-lightbox-open", "");
+    return () => document.documentElement.removeAttribute("data-lightbox-open");
+  }, []);
+
   const item = items[index];
   if (!item) return null;
 

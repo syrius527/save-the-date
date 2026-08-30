@@ -8,6 +8,7 @@ export default function SoundToggle({ hasVideo }: { hasVideo: boolean }) {
   if (!hasVideo) return null;
   return (
     <div
+      className="soundToggleWrap"
       style={{
         position: "absolute",
         top: "calc(14px + env(safe-area-inset-top))",

@@ -1,10 +1,12 @@
 import { FONT, WEDDING } from "@/lib/constants";
-import type { TransportRow } from "@/lib/variant";
+import type { VariantConfig } from "@/lib/variant";
+import KakaoMap from "../ui/KakaoMap";
+import TransportTabs from "../ui/TransportTabs";
 
 export default function LocationSection({
-  transportRows,
+  transport,
 }: {
-  transportRows: TransportRow[];
+  transport: VariantConfig["transport"];
 }) {
   return (
     <section
@@ -44,33 +46,7 @@ export default function LocationSection({
           {WEDDING.venue.address}
         </div>
       </div>
-      <div
-        style={{
-          aspectRatio: "var(--map-ar)",
-          borderRadius: 14,
-          overflow: "hidden",
-          border: "1px solid var(--line)",
-          background:
-            "repeating-linear-gradient(45deg,color-mix(in srgb,var(--bg2) 92%, var(--ink)) 0 12px,var(--bg2) 12px 24px)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
-        <div
-          style={{
-            fontFamily: "ui-monospace,Menlo,monospace",
-            fontSize: 11,
-            color: "var(--sub)",
-            textAlign: "center",
-            lineHeight: 1.8,
-          }}
-        >
-          지도 영역
-          <br />
-          (카카오맵 / 네이버 지도 연동)
-        </div>
-      </div>
+      <KakaoMap />
       <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
         {(
           [
@@ -98,32 +74,7 @@ export default function LocationSection({
           </a>
         ))}
       </div>
-      <div
-        style={{
-          marginTop: 22,
-          display: "flex",
-          flexDirection: "column",
-          gap: 14,
-          fontSize: 13,
-          lineHeight: 1.7,
-        }}
-      >
-        {transportRows.map((row) => (
-          <div key={row.label} style={{ display: "flex", gap: 12 }}>
-            <div
-              style={{
-                flex: "none",
-                width: 52,
-                fontWeight: 600,
-                color: "var(--accent)",
-              }}
-            >
-              {row.label}
-            </div>
-            <div style={{ color: "var(--sub)" }}>{row.body}</div>
-          </div>
-        ))}
-      </div>
+      <TransportTabs car={transport.car} transit={transport.transit} />
     </section>
   );
 }
