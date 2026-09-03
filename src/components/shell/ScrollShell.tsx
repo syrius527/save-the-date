@@ -18,23 +18,30 @@ export default function ScrollShell({
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
+  const sectionsRef = useRef<HTMLElement[]>([]);
   const [active, setActive] = useState(0);
   const [soft, setSoft] = useState(false);
 
   useEffect(() => {
     const c = ref.current;
     if (!c) return;
+    // 섹션 인덱스는 DOM 순서를 따른다 — 섹션 추가/제거 시 번호 재부여 불필요
+    const els = Array.from(
+      c.querySelectorAll<HTMLElement>("section.snapSection"),
+    );
+    sectionsRef.current = els;
     const io = new IntersectionObserver(
       (es) => {
         es.forEach((en) => {
           if (en.isIntersecting) {
-            setActive(Number(en.target.getAttribute("data-idx")) || 0);
+            const i = els.indexOf(en.target as HTMLElement);
+            if (i >= 0) setActive(i);
           }
         });
       },
       { root: c, rootMargin: "-45% 0px -45% 0px", threshold: 0 },
     );
-    c.querySelectorAll("section[data-idx]").forEach((s) => io.observe(s));
+    els.forEach((s) => io.observe(s));
 
     const onFocusIn = (e: FocusEvent) => {
       if (isFormField(e.target)) setSoft(true);
@@ -50,9 +57,7 @@ export default function ScrollShell({
   }, []);
 
   const goTo = (i: number) => {
-    ref.current
-      ?.querySelector(`section[data-idx="${i}"]`)
-      ?.scrollIntoView({ behavior: "smooth" });
+    sectionsRef.current[i]?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (

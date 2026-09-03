@@ -7,6 +7,7 @@ import SoundToggle from "@/components/shell/SoundToggle";
 import ScrollShell from "@/components/shell/ScrollShell";
 import CoverSection from "@/components/sections/CoverSection";
 import InvitationSection from "@/components/sections/InvitationSection";
+import PoemSection from "@/components/sections/PoemSection";
 import AboutSection from "@/components/sections/AboutSection";
 import SaveTheDateSection from "@/components/sections/SaveTheDateSection";
 import GallerySection from "@/components/sections/GallerySection";
@@ -58,6 +59,7 @@ export default async function Page({
             greetingTitle={vc.greetingTitle}
             greetingBody={vc.greetingBody}
           />
+          <PoemSection />
           <AboutSection />
           <SaveTheDateSection />
           <GallerySection images={galleryImages} />

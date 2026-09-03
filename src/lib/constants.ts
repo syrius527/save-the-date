@@ -44,6 +44,8 @@ export const ACCOUNTS: { groom: Account[]; bride: Account[] } = {
   ],
   bride: [
     { role: "신부", name: "정래원", bank: "우리은행", num: "1002-159-756920" },
+    { role: "아버지", name: "정봉수", bank: "국민은행", num: "713701-01-196182" },
+    { role: "어머니", name: "임명숙", bank: "농협은행", num: "401140-56-047714" },
   ],
 };
 
@@ -103,6 +105,7 @@ export const COVER_VIDEO_SRC: string | null = "/cover/reel-web.mp4";
 export const SECTIONS: ReadonlyArray<readonly [string, string]> = [
   ["cover", "커버"],
   ["invite", "초대"],
+  ["poem", "사랑에 답함"],
   ["about", "소개"],
   ["date", "일시"],
   ["gallery", "갤러리"],
