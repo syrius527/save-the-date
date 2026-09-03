@@ -1,12 +1,13 @@
 import { Fragment } from "react";
 import { FONT } from "@/lib/constants";
 
-// 나태주, 「사랑에 답함」 — 신랑·신부가 고른 시 (원문 그대로)
+// 나태주, 「먼 길」 — 신랑·신부가 고른 시 (원문 그대로)
 const STANZAS: string[][] = [
-  ["예쁘지 않은 것을 예쁘게", "보아주는 것이 사랑이다"],
-  ["좋지 않은 것을 좋게", "생각해주는 것이 사랑이다"],
-  ["싫은 것도 잘 참아주면서", "처음만 그런 것이 아니라"],
-  ["나중까지 아주 나중까지", "그렇게 하는 것이 사랑이다"],
+  ["함께 가자", "먼 길"],
+  ["너와 함께라면", "멀어도 가깝고"],
+  ["아름답지 않아도", "아름다운 길"],
+  ["나도 그 길 위에서", "나무가 되고"],
+  ["너를 위해 착한", "바람이 되고 싶다."],
 ];
 
 export default function PoemSection() {
@@ -41,7 +42,7 @@ export default function PoemSection() {
           margin: "12px 0 4px",
         }}
       >
-        사랑에 답함
+        먼 길
       </h2>
       <div style={{ fontSize: 12, color: "var(--sub)", letterSpacing: 1 }}>
         나태주

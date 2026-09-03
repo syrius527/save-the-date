@@ -105,7 +105,7 @@ export const COVER_VIDEO_SRC: string | null = "/cover/reel-web.mp4";
 export const SECTIONS: ReadonlyArray<readonly [string, string]> = [
   ["cover", "커버"],
   ["invite", "초대"],
-  ["poem", "사랑에 답함"],
+  ["poem", "먼 길"],
   ["about", "소개"],
   ["date", "일시"],
   ["gallery", "갤러리"],
