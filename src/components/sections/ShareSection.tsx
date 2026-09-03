@@ -32,7 +32,7 @@ export default function ShareSection({ variant }: { variant: Variant }) {
         url: shareUrl(),
         title: `${WEDDING.groom.firstName} ♥ ${WEDDING.bride.firstName} 결혼합니다`,
         description: `${WEDDING.dateLabelKo} · ${WEDDING.venue.name}`,
-        imageUrl: `${location.origin}/og.jpg`,
+        imageUrl: `${location.origin}/og1.jpg`,
       });
     } catch {
       setKakaoMsg("카카오 공유를 열지 못했어요. 링크 복사를 이용해주세요.");

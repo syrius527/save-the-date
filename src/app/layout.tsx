@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title,
     description,
     type: "website",
-    images: [{ url: "/og.jpg", width: 1200, height: 630 }],
+    images: [{ url: "/og1.jpg", width: 1200, height: 630 }],
   },
 };
 

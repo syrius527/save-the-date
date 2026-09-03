@@ -58,5 +58,5 @@ const og = Buffer.from(
     text-anchor="middle">2026. 10. 24. SAT 6PM · 워커힐 호텔 워커홀</text>
 </svg>`,
 );
-await sharp(og).jpeg({ quality: 88 }).toFile("public/og.jpg");
-console.log("generated public/og.jpg");
+await sharp(og).jpeg({ quality: 88 }).toFile("public/og1.jpg");
+console.log("generated public/og1.jpg");
