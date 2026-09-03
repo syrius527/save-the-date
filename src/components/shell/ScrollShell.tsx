@@ -66,6 +66,7 @@ export default function ScrollShell({
         ref={ref}
         data-scroll="1"
         className={`snapShell${soft ? " softSnap" : ""}`}
+        onContextMenu={(e) => e.preventDefault()}
       >
         {children}
       </div>

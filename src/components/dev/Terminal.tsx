@@ -441,6 +441,8 @@ export default function Terminal({
 
   return (
     <div
+      className="noSave"
+      onContextMenu={(e) => e.preventDefault()}
       style={{
         minHeight: "100dvh",
         background: T.bgDarker,

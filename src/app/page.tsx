@@ -35,6 +35,7 @@ export default async function Page({
 
   return (
     <div
+      className="noSave"
       style={{
         ...themeVars(),
         position: "relative",

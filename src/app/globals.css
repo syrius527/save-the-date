@@ -118,6 +118,17 @@ textarea:focus {
   }
 }
 
+/* 사진 꾹 눌러 저장(길게 누르기 메뉴) 방지 — 스크린샷까지 막지는 못함.
+   이미지는 버튼/제스처 래퍼가 탭을 받으므로 pointer-events를 꺼도 동작 유지 */
+.noSave img,
+.noSave video {
+  -webkit-touch-callout: none;
+  -webkit-user-drag: none;
+  -webkit-user-select: none;
+  user-select: none;
+  pointer-events: none;
+}
+
 /* 라이트박스가 열려 있는 동안 사운드 토글 숨김 (닫기 × 버튼과 겹침 방지) */
 [data-lightbox-open] .soundToggleWrap {
   opacity: 0;
