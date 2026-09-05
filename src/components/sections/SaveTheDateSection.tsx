@@ -2,7 +2,7 @@ import Image from "next/image";
 import { FONT, WEDDING } from "@/lib/constants";
 import Calendar from "../ui/Calendar";
 import Countdown from "../ui/Countdown";
-import datePhoto from "@/assets/photos/couple2.jpg";
+import datePhoto from "@/assets/photos/calendar-cover.jpg";
 
 export default function SaveTheDateSection() {
   return (
