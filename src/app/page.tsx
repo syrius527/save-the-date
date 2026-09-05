@@ -66,11 +66,11 @@ export default async function Page({
           <GallerySection images={galleryImages} />
           <LocationSection transport={vc.transport} />
           <AccountsSection />
+          <RsvpSection variant={variant} />
           <GuestbookSection
             initialEntries={guestbook.entries}
             initialCursor={guestbook.nextCursor}
           />
-          <RsvpSection variant={variant} />
           <ShareSection variant={variant} />
         </ScrollShell>
       </SoundProvider>
