@@ -46,7 +46,7 @@ const SHUTTLE_ROWS: TransportRow[] = [
     links: [
       {
         label: "강변역 1번 출구 ↗",
-        href: "https://kko.to/SE-mJVDIR1",
+        href: "https://map.kakao.com/?q=%EC%9B%8C%EC%BB%A4%ED%9E%90%ED%98%B8%ED%85%94%20%EC%85%94%ED%8B%80%EB%B2%84%EC%8A%A4%EC%A0%95%EB%A5%98%EC%9E%A5",
       },
       {
         label: "광나루역 2번 출구 ↗",
