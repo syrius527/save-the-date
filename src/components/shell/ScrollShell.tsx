@@ -30,6 +30,15 @@ export default function ScrollShell({
       c.querySelectorAll<HTMLElement>("section.snapSection"),
     );
     sectionsRef.current = els;
+
+    // ?part=N (1부터 시작)으로 진입하면 해당 파트에서 바로 시작
+    // 범위 밖·오타는 조용히 무시하고 커버부터
+    const part = Number(new URLSearchParams(window.location.search).get("part"));
+    if (Number.isInteger(part) && part >= 1 && part <= els.length) {
+      els[part - 1].scrollIntoView({ behavior: "instant" });
+      setActive(part - 1);
+    }
+
     const io = new IntersectionObserver(
       (es) => {
         es.forEach((en) => {
