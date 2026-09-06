@@ -21,17 +21,23 @@ import coverPoster from "@/assets/photos/cover-poster.jpg";
 export default async function Page({
   searchParams,
 }: {
-  searchParams: Promise<{ to?: string | string[] }>;
+  searchParams: Promise<{ to?: string | string[]; t?: string | string[] }>;
 }) {
   const sp = await searchParams;
   const variant = resolveVariant(typeof sp.to === "string" ? sp.to : undefined);
   const vc = VARIANTS[variant];
   const guestbook = await fetchGuestbookPage();
 
-  // 갤러리: 렌더링마다 카테고리별로 1장씩 랜덤 선택
-  const galleryImages = GALLERY_CATEGORIES.map(
-    (cat) => cat[Math.floor(Math.random() * cat.length)],
-  );
+  // 갤러리: 렌더링마다 카테고리별로 1장씩 랜덤 선택.
+  // 단, ?t=p면 카테고리에 `_fix` 접미사 사진이 있을 경우 그 사진으로 고정
+  const pinned = (typeof sp.t === "string" ? sp.t : undefined) === "p";
+  const galleryImages = GALLERY_CATEGORIES.map((cat) => {
+    if (pinned) {
+      const fix = cat.find((img) => img.src.includes("_fix."));
+      if (fix) return fix;
+    }
+    return cat[Math.floor(Math.random() * cat.length)];
+  });
 
   return (
     <div
