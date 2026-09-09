@@ -4,16 +4,25 @@ import { useRef, useState } from "react";
 import { FONT, WEDDING } from "@/lib/constants";
 import { copyText } from "@/lib/copy";
 import { kakaoConfigured, shareKakao } from "@/lib/kakao";
-import type { Variant } from "@/lib/variant";
 
-export default function ShareSection({ variant }: { variant: Variant }) {
+export default function ShareSection() {
   const [linkCopied, setLinkCopied] = useState(false);
   const [kakaoMsg, setKakaoMsg] = useState("");
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // 현재 손님 구분(variant)을 유지한 정규화 URL — 잡다한 파라미터는 제거
-  const shareUrl = () =>
-    `${location.origin}${variant === "family" ? "/?to=family" : "/"}`;
+  // 지금 보고 있는 링크의 파라미터를 그대로 이어서 공유한다.
+  // (to=친인척 구분, t=고정 사진, part=시작 위치) — 그 외 유입 파라미터는 제거
+  const KEEP = ["to", "t", "part"];
+  const shareUrl = () => {
+    const cur = new URLSearchParams(location.search);
+    const next = new URLSearchParams();
+    for (const k of KEEP) {
+      const v = cur.get(k);
+      if (v) next.set(k, v);
+    }
+    const qs = next.toString();
+    return `${location.origin}/${qs ? `?${qs}` : ""}`;
+  };
 
   const onCopy = async () => {
     await copyText(shareUrl());

@@ -109,6 +109,12 @@ textarea:focus {
   display: none;
 }
 
+/* 내부 스크롤이 끝에 닿으면 다음 파트로 이어서 스크롤되도록 체이닝 허용
+   (갤러리처럼 읽고 지나가는 목록용. 폼이 있는 게스트 스냅은 contain 유지) */
+.innerScroll.chainToPage {
+  overscroll-behavior: auto;
+}
+
 @keyframes fadeIn {
   from {
     opacity: 0;

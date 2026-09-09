@@ -46,8 +46,6 @@ export default function AccountsSection() {
           참석이 어려워 직접 축하를 전하지 못하는
           <br />
           분들을 위해 계좌번호를 안내드립니다.
-          <br />
-          화환은 정중히 사양하며, 마음만 감사히 받겠습니다.
         </p>
       </div>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>

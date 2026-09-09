@@ -55,7 +55,10 @@ export default function GallerySection({
       </div>
       {/* 2열 매소너리: 각 사진이 원본 비율 그대로, 컬럼이 높이를 자동 분배.
           전체 높이가 한 화면을 넘으므로 섹션 내부 스크롤로 스냅 리듬 유지 */}
-      <div className="innerScroll" style={{ maxHeight: "60svh", padding: "0 20px" }}>
+      <div
+        className="innerScroll chainToPage"
+        style={{ maxHeight: "60svh", padding: "0 20px" }}
+      >
         <div style={{ columns: 2, columnGap: 6 }}>
           {images.map((img, i) => (
             <button

@@ -110,6 +110,7 @@ export const SECTIONS: ReadonlyArray<readonly [string, string]> = [
   ["date", "일시"],
   ["gallery", "갤러리"],
   ["map", "오시는 길"],
+  ["notice", "화환 사양"],
   ["gift", "마음 전하실 곳"],
   ["rsvp", "참석 여부"],
   ["guestbook", "게스트 스냅"],

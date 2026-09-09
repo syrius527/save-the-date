@@ -12,6 +12,7 @@ import AboutSection from "@/components/sections/AboutSection";
 import SaveTheDateSection from "@/components/sections/SaveTheDateSection";
 import GallerySection from "@/components/sections/GallerySection";
 import LocationSection from "@/components/sections/LocationSection";
+import FlowerNoticeSection from "@/components/sections/FlowerNoticeSection";
 import AccountsSection from "@/components/sections/AccountsSection";
 import GuestbookSection from "@/components/sections/GuestbookSection";
 import RsvpSection from "@/components/sections/RsvpSection";
@@ -71,13 +72,14 @@ export default async function Page({
           <SaveTheDateSection />
           <GallerySection images={galleryImages} />
           <LocationSection transport={vc.transport} />
+          <FlowerNoticeSection />
           <AccountsSection />
           <RsvpSection variant={variant} />
           <GuestbookSection
             initialEntries={guestbook.entries}
             initialCursor={guestbook.nextCursor}
           />
-          <ShareSection variant={variant} />
+          <ShareSection />
         </ScrollShell>
       </SoundProvider>
     </div>
