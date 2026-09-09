@@ -187,6 +187,23 @@ export default function Terminal({
     } else {
       es.slice(0, 3).forEach((e) => append(<EntryOut entry={e} />));
     }
+    // 실사용 피드백: `guestbook write`를 찾기 어려워해서 매번 안내
+    append(
+      <Ln>
+        <Dim>메시지를 남기려면 </Dim>
+        <span style={{ color: T.green }}>guestbook write</span>
+        <Dim> 를 입력하세요.</Dim>
+      </Ln>,
+    );
+    append(
+      <Ln>
+        <Dim>본식에서 찍은 사진은 여기(CLI)에선 올릴 수 없어요. </Dim>
+        <a href="/" style={{ color: T.cyan, textDecoration: "underline" }}>
+          본 청첩장 게스트 스냅 ↗
+        </a>
+        <Dim>에 올려주시면 소중히 간직할게요.</Dim>
+      </Ln>,
+    );
     setChips(["guestbook write", ...(cursorRef.current ? ["guestbook more"] : []), ...BASE_CHIPS]);
   };
 

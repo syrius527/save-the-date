@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FONT } from "@/lib/constants";
 import type { GuestbookEntryDTO, GuestbookPage } from "@/lib/types";
 import {
@@ -161,6 +161,63 @@ export default function GuestbookSection({
 
   const poolRef = useRef<UploadPool | null>(null);
   const pool = () => (poolRef.current ??= new UploadPool(setUploads));
+  const sectionRef = useRef<HTMLElement>(null);
+
+  // 이 섹션을 보고 있는 동안 30초마다 새 스냅을 가져온다.
+  // 화면 밖이거나 탭이 백그라운드면 멈춰서 불필요한 요청을 만들지 않는다.
+  useEffect(() => {
+    const el = sectionRef.current;
+    if (!el) return;
+    let onScreen = false;
+    let timer: ReturnType<typeof setInterval> | null = null;
+
+    const poll = async () => {
+      if (document.visibilityState !== "visible") return;
+      try {
+        const res = await fetch("/api/guestbook", { cache: "no-store" });
+        if (!res.ok) return;
+        const page = (await res.json()) as GuestbookPage;
+        setEntries((prev) => {
+          const seen = new Set(prev.map((e) => e.id));
+          const fresh = page.entries.filter((e) => !seen.has(e.id));
+          // 이미 불러온 목록(더 보기 포함)은 유지하고 새 글만 앞에 붙인다
+          return fresh.length > 0 ? [...fresh, ...prev] : prev;
+        });
+      } catch {}
+    };
+
+    const start = () => {
+      if (!timer) timer = setInterval(poll, 30_000);
+    };
+    const stop = () => {
+      if (timer) clearInterval(timer);
+      timer = null;
+    };
+    const sync = () => {
+      if (onScreen && document.visibilityState === "visible") {
+        void poll();
+        start();
+      } else {
+        stop();
+      }
+    };
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        onScreen = entry.isIntersecting;
+        sync();
+      },
+      { threshold: 0.1 },
+    );
+    io.observe(el);
+    document.addEventListener("visibilitychange", sync);
+
+    return () => {
+      io.disconnect();
+      document.removeEventListener("visibilitychange", sync);
+      stop();
+    };
+  }, []);
 
   const onFiles = async (files: File[]) => {
     const { accepted, rejected } = await validateFiles(files);
@@ -249,6 +306,7 @@ export default function GuestbookSection({
 
   return (
     <section
+      ref={sectionRef}
       data-idx={7}
       data-screen-label="Guestbook"
       className="snapSection"
