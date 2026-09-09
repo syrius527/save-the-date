@@ -152,11 +152,30 @@ export default function Terminal({
   };
 
   // ── 방명록 플로우 ──────────────────────────────────────
-  const showGuestbook = () => {
+  const showGuestbook = async () => {
+    append(
+      <Ln>
+        <Dim>$ curl -s /api/guestbook | tail -3</Dim>
+      </Ln>,
+    );
+    // 페이지 로드 시점 스냅샷이 아니라 명령 실행 시점의 최신 데이터를 조회
+    try {
+      const res = await fetch("/api/guestbook", { cache: "no-store" });
+      if (!res.ok) throw new Error(String(res.status));
+      const page = (await res.json()) as GuestbookPage;
+      entriesRef.current = page.entries;
+      cursorRef.current = page.nextCursor;
+    } catch {
+      append(
+        <Ln color={T.red}>
+          불러오지 못했어요. 마지막으로 받은 내용을 보여드립니다.
+        </Ln>,
+      );
+    }
     const es = entriesRef.current;
     append(
       <Ln>
-        <Dim>$ tail -3 guestbook.txt ({es.length}건 로드됨)</Dim>
+        <Dim>최신 {es.length}건</Dim>
       </Ln>,
     );
     if (es.length === 0) {
@@ -373,7 +392,7 @@ export default function Terminal({
     if (["guestbook", "방명록", "gb"].includes(head)) {
       if (arg === "write") return guestbookWrite();
       if (arg === "more") return void guestbookMore();
-      return showGuestbook();
+      return void showGuestbook();
     }
     if (["rsvp", "참석"].includes(head)) return startRsvp();
     if (head === "claude") {
