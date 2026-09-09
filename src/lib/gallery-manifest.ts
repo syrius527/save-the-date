@@ -2,7 +2,7 @@
 // 재생성: npm run gallery
 import type { StaticImageData } from "next/image";
 import g01_0 from "@/assets/photos/gallery/01/AB_00015-.jpg";
-import g01_1 from "@/assets/photos/gallery/01/AB_00393-.jpg";
+import g01_1 from "@/assets/photos/gallery/01/AB_00393-_fix.jpg";
 import g01_2 from "@/assets/photos/gallery/01/gallery-01.jpg";
 import g02_0 from "@/assets/photos/gallery/02/AB_00100.jpg";
 import g02_1 from "@/assets/photos/gallery/02/AB_00130-_fix.jpg";
@@ -13,22 +13,23 @@ import g02_5 from "@/assets/photos/gallery/02/BB_00081.jpg";
 import g02_6 from "@/assets/photos/gallery/02/BB_00186.jpg";
 import g03_0 from "@/assets/photos/gallery/03/AB_00173-.jpg";
 import g03_1 from "@/assets/photos/gallery/03/AB_00250.jpg";
+import g03_2 from "@/assets/photos/gallery/03/AB_01245-_fix.jpg";
 import g04_0 from "@/assets/photos/gallery/04/AB_00295-.jpg";
 import g04_1 from "@/assets/photos/gallery/04/AB_00322-_fix.jpg";
 import g05_0 from "@/assets/photos/gallery/05/AB_00814.jpg";
-import g05_1 from "@/assets/photos/gallery/05/AB_00822-.jpg";
+import g05_1 from "@/assets/photos/gallery/05/AB_00822-_fix.jpg";
 import g06_0 from "@/assets/photos/gallery/06/AB_01089-.jpg";
 import g06_1 from "@/assets/photos/gallery/06/AB_01098-.jpg";
 import g06_2 from "@/assets/photos/gallery/06/AB_01175-.jpg";
 import g06_3 from "@/assets/photos/gallery/06/AB_01180.jpg";
+import g06_4 from "@/assets/photos/gallery/06/BB_00323-_fix.jpg";
 import g07_0 from "@/assets/photos/gallery/07/AB_01189.jpg";
 import g07_1 from "@/assets/photos/gallery/07/AB_01216.jpg";
 import g07_2 from "@/assets/photos/gallery/07/BB_00236-.jpg";
-import g07_3 from "@/assets/photos/gallery/07/BB_00243-.jpg";
-import g08_0 from "@/assets/photos/gallery/08/AB_01234.jpg";
-import g08_1 from "@/assets/photos/gallery/08/AB_01512-.jpg";
-import g08_2 from "@/assets/photos/gallery/08/BB_00311.jpg";
-import g09_0 from "@/assets/photos/gallery/09/AB_01895-.jpg";
+import g07_3 from "@/assets/photos/gallery/07/BB_00243-_fix.jpg";
+import g08_0 from "@/assets/photos/gallery/08/AB_01512-_fix.jpg";
+import g08_1 from "@/assets/photos/gallery/08/BB_00311.jpg";
+import g09_0 from "@/assets/photos/gallery/09/AB_01895-_fix.jpg";
 import g09_1 from "@/assets/photos/gallery/09/AB_01979.jpg";
 import g09_2 from "@/assets/photos/gallery/09/AB_02093-.jpg";
 import g10_0 from "@/assets/photos/gallery/10/AB_02137-.jpg";
@@ -36,13 +37,14 @@ import g10_1 from "@/assets/photos/gallery/10/AB_02141.jpg";
 import g10_2 from "@/assets/photos/gallery/10/AB_02167-_fix.jpg";
 import g10_3 from "@/assets/photos/gallery/10/AB_02178.jpg";
 import g10_4 from "@/assets/photos/gallery/10/AB_02198-.jpg";
-import g11_0 from "@/assets/photos/gallery/11/AB_01317_fix.jpg";
+import g11_0 from "@/assets/photos/gallery/11/AB_01317.jpg";
 import g11_1 from "@/assets/photos/gallery/11/AB_01318.jpg";
 import g11_2 from "@/assets/photos/gallery/11/AB_01322.jpg";
-import g11_3 from "@/assets/photos/gallery/11/AB_01367.jpg";
+import g11_3 from "@/assets/photos/gallery/11/AB_01340-_fix.jpg";
+import g11_4 from "@/assets/photos/gallery/11/AB_01367.jpg";
 import g12_0 from "@/assets/photos/gallery/12/AB_00066-.jpg";
-import g12_1 from "@/assets/photos/gallery/12/AB_00414_fix.jpg";
-import g12_2 from "@/assets/photos/gallery/12/AB_00623-.jpg";
+import g12_1 from "@/assets/photos/gallery/12/AB_00414.jpg";
+import g12_2 from "@/assets/photos/gallery/12/AB_00623-_fix.jpg";
 import g12_3 from "@/assets/photos/gallery/12/AB_00634-.jpg";
 import g12_4 from "@/assets/photos/gallery/12/AB_00861.jpg";
 import g12_5 from "@/assets/photos/gallery/12/BB_00001.jpg";
@@ -52,14 +54,14 @@ import g12_7 from "@/assets/photos/gallery/12/BB_00309-.jpg";
 export const GALLERY_CATEGORIES: StaticImageData[][] = [
   [g01_0, g01_1, g01_2], // 01 (3장)
   [g02_0, g02_1, g02_2, g02_3, g02_4, g02_5, g02_6], // 02 (7장)
-  [g03_0, g03_1], // 03 (2장)
+  [g03_0, g03_1, g03_2], // 03 (3장)
   [g04_0, g04_1], // 04 (2장)
   [g05_0, g05_1], // 05 (2장)
-  [g06_0, g06_1, g06_2, g06_3], // 06 (4장)
+  [g06_0, g06_1, g06_2, g06_3, g06_4], // 06 (5장)
   [g07_0, g07_1, g07_2, g07_3], // 07 (4장)
-  [g08_0, g08_1, g08_2], // 08 (3장)
+  [g08_0, g08_1], // 08 (2장)
   [g09_0, g09_1, g09_2], // 09 (3장)
   [g10_0, g10_1, g10_2, g10_3, g10_4], // 10 (5장)
-  [g11_0, g11_1, g11_2, g11_3], // 11 (4장)
+  [g11_0, g11_1, g11_2, g11_3, g11_4], // 11 (5장)
   [g12_0, g12_1, g12_2, g12_3, g12_4, g12_5, g12_6, g12_7], // 12 (8장)
 ];
