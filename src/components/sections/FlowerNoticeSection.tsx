@@ -28,15 +28,12 @@ export default function FlowerNoticeSection() {
       <h2
         style={{
           fontFamily: FONT.serif,
-          fontSize: 23,
+          fontSize: 19,
           fontWeight: 500,
-          lineHeight: 1.55,
-          margin: "26px 0 0",
+          margin: "12px 0 0",
         }}
       >
-        화환은
-        <br />
-        정중히 사양합니다
+        화환은 정중히 사양합니다
       </h2>
       <div
         style={{
