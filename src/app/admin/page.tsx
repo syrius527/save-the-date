@@ -150,12 +150,13 @@ export default async function AdminPage() {
       </div>
 
       <h2 style={{ fontSize: 14.5, margin: "26px 0 10px" }}>
-        방명록 관리 (최근 {guestbook.entries.length}건)
+        게스트 스냅 (최근 {guestbook.entries.length}건 · 사진{" "}
+        {guestbook.entries.reduce((n, e) => n + e.photos.length, 0)}장)
       </h2>
       <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
         {guestbook.entries.length === 0 && (
           <div style={{ ...card, color: "#8a8177", fontSize: 13 }}>
-            아직 방명록 글이 없습니다.
+            아직 올라온 스냅이 없습니다.
           </div>
         )}
         {guestbook.entries.map((e) => (
@@ -183,16 +184,18 @@ export default async function AdminPage() {
               </div>
               <DeleteEntryButton id={e.id} />
             </div>
-            <div
-              style={{
-                fontSize: 13,
-                lineHeight: 1.7,
-                marginTop: 6,
-                whiteSpace: "pre-wrap",
-              }}
-            >
-              {e.message}
-            </div>
+            {e.message && (
+              <div
+                style={{
+                  fontSize: 13,
+                  lineHeight: 1.7,
+                  marginTop: 6,
+                  whiteSpace: "pre-wrap",
+                }}
+              >
+                {e.message}
+              </div>
+            )}
             {e.photos.length > 0 && (
               <div
                 style={{
