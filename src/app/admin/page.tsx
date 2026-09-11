@@ -1,19 +1,9 @@
 import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
 import { fetchGuestbookPage } from "@/lib/guestbook-data";
 import DeleteEntryButton from "./DeleteEntryButton";
+import RsvpTable, { type RsvpRow } from "./RsvpTable";
 
 export const dynamic = "force-dynamic";
-
-interface RsvpRow {
-  id: string;
-  side: "groom" | "bride";
-  attending: boolean;
-  name: string;
-  relation: string | null;
-  headcount: number;
-  variant: string;
-  created_at: string;
-}
 
 const card: React.CSSProperties = {
   background: "#fffdf8",
@@ -98,56 +88,7 @@ export default async function AdminPage() {
         />
       </div>
 
-      <div style={{ ...card, marginTop: 12, overflowX: "auto" }}>
-        <table
-          style={{
-            width: "100%",
-            borderCollapse: "collapse",
-            fontSize: 12.5,
-            minWidth: 480,
-          }}
-        >
-          <thead>
-            <tr style={{ textAlign: "left", color: "#8a8177" }}>
-              <th style={{ padding: "6px 8px" }}>측</th>
-              <th style={{ padding: "6px 8px" }}>참석</th>
-              <th style={{ padding: "6px 8px" }}>성함</th>
-              <th style={{ padding: "6px 8px" }}>관계</th>
-              <th style={{ padding: "6px 8px" }}>인원</th>
-              <th style={{ padding: "6px 8px" }}>링크</th>
-              <th style={{ padding: "6px 8px" }}>시각</th>
-            </tr>
-          </thead>
-          <tbody>
-            {rsvps.length === 0 && (
-              <tr>
-                <td colSpan={7} style={{ padding: 14, color: "#8a8177" }}>
-                  아직 응답이 없습니다.
-                </td>
-              </tr>
-            )}
-            {rsvps.map((r) => (
-              <tr key={r.id} style={{ borderTop: "1px solid #efe9dd" }}>
-                <td style={{ padding: "7px 8px" }}>
-                  {r.side === "groom" ? "신랑측" : "신부측"}
-                </td>
-                <td style={{ padding: "7px 8px" }}>
-                  {r.attending ? "참석" : "불참"}
-                </td>
-                <td style={{ padding: "7px 8px" }}>{r.name}</td>
-                <td style={{ padding: "7px 8px" }}>{r.relation || "-"}</td>
-                <td style={{ padding: "7px 8px" }}>{r.headcount}</td>
-                <td style={{ padding: "7px 8px" }}>
-                  {r.variant === "family" ? "친인척" : "지인"}
-                </td>
-                <td style={{ padding: "7px 8px", whiteSpace: "nowrap" }}>
-                  {fmt.format(new Date(r.created_at))}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <RsvpTable rows={rsvps} />
 
       <h2 style={{ fontSize: 14.5, margin: "26px 0 10px" }}>
         게스트 스냅 (최근 {guestbook.entries.length}건 · 사진{" "}
