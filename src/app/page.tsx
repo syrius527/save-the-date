@@ -1,7 +1,7 @@
 import { COVER_VIDEO_SRC, FONT, SECTIONS, themeVars } from "@/lib/constants";
 import { resolveVariant, VARIANTS } from "@/lib/variant";
 import { fetchGuestbookPage } from "@/lib/guestbook-data";
-import { GALLERY_CATEGORIES } from "@/lib/gallery-manifest";
+import { GALLERY_CATEGORIES, GALLERY_FIXED } from "@/lib/gallery-manifest";
 import { SoundProvider } from "@/components/shell/SoundContext";
 import SoundToggle from "@/components/shell/SoundToggle";
 import ScrollShell from "@/components/shell/ScrollShell";
@@ -29,16 +29,15 @@ export default async function Page({
   const vc = VARIANTS[variant];
   const guestbook = await fetchGuestbookPage();
 
-  // 갤러리: 렌더링마다 카테고리별로 1장씩 랜덤 선택.
-  // 단, ?t=p면 카테고리에 `_fix` 접미사 사진이 있을 경우 그 사진으로 고정
+  // 갤러리: ?t=p면 gallery/fix 폴더를 파일명 순서대로 고정 노출,
+  // 그 외에는 렌더링마다 카테고리(01~12)별로 1장씩 랜덤 선택
   const pinned = (typeof sp.t === "string" ? sp.t : undefined) === "p";
-  const galleryImages = GALLERY_CATEGORIES.map((cat) => {
-    if (pinned) {
-      const fix = cat.find((img) => img.src.includes("_fix."));
-      if (fix) return fix;
-    }
-    return cat[Math.floor(Math.random() * cat.length)];
-  });
+  const galleryImages =
+    pinned && GALLERY_FIXED.length > 0
+      ? GALLERY_FIXED
+      : GALLERY_CATEGORIES.map(
+          (cat) => cat[Math.floor(Math.random() * cat.length)],
+        );
 
   return (
     <div
@@ -71,10 +70,10 @@ export default async function Page({
           <AboutSection />
           <SaveTheDateSection />
           <GallerySection images={galleryImages} />
-          <LocationSection transport={vc.transport} />
-          <FlowerNoticeSection />
-          <AccountsSection />
           <RsvpSection variant={variant} />
+          <FlowerNoticeSection />
+          <LocationSection transport={vc.transport} />
+          <AccountsSection />
           <GuestbookSection
             initialEntries={guestbook.entries}
             initialCursor={guestbook.nextCursor}
