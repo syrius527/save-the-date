@@ -57,7 +57,15 @@ export default async function Page({
     >
       <SoundProvider>
         <SoundToggle hasVideo={Boolean(COVER_VIDEO_SRC)} />
-        <ScrollShell labels={SECTIONS.map(([, label]) => label)}>
+        <ScrollShell
+          labels={SECTIONS.map(([, label]) => label)}
+          rsvpIndex={SECTIONS.findIndex(([key]) => key === "rsvp")}
+          modalTriggers={["date", "gift"].map((key) => ({
+            key,
+            index: SECTIONS.findIndex(([k]) => k === key),
+          }))}
+          variant={variant}
+        >
           <CoverSection
             videoSrc={COVER_VIDEO_SRC}
             posterSrc={coverPoster.src}

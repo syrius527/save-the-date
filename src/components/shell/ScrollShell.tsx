@@ -2,6 +2,9 @@
 
 import { useEffect, useRef, useState } from "react";
 import NavDots from "./NavDots";
+import RsvpFab, { RSVP_DONE_EVENT, RSVP_DONE_KEY } from "./RsvpFab";
+import RsvpModal from "./RsvpModal";
+import type { Variant } from "@/lib/variant";
 
 function isFormField(t: EventTarget | null): boolean {
   return (
@@ -10,17 +13,69 @@ function isFormField(t: EventTarget | null): boolean {
   );
 }
 
+// 모달을 띄울 파트 (캘린더·계좌) — 각각 기기당 1회
+const MODAL_SEEN_KEY = "wg_rsvp_modal_seen";
+const MODAL_DELAY_MS = 1400;
+
+function readSeen(): string[] {
+  try {
+    const v = JSON.parse(localStorage.getItem(MODAL_SEEN_KEY) ?? "[]");
+    return Array.isArray(v) ? v : [];
+  } catch {
+    return [];
+  }
+}
+
 export default function ScrollShell({
   labels,
+  rsvpIndex,
+  modalTriggers,
+  variant,
   children,
 }: {
   labels: string[];
+  rsvpIndex: number;
+  modalTriggers: { key: string; index: number }[];
+  variant: Variant;
   children: React.ReactNode;
 }) {
   const ref = useRef<HTMLDivElement>(null);
   const sectionsRef = useRef<HTMLElement[]>([]);
   const [active, setActive] = useState(0);
   const [soft, setSoft] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const rsvpDoneRef = useRef(false);
+
+  // 이미 제출한 기기에서는 모달을 띄우지 않는다
+  useEffect(() => {
+    try {
+      rsvpDoneRef.current = localStorage.getItem(RSVP_DONE_KEY) === "1";
+    } catch {}
+    // 모달을 여기서 닫지 않는다 — 모달이 감사 인사를 보여준 뒤 스스로 닫는다
+    const onDone = () => {
+      rsvpDoneRef.current = true;
+    };
+    window.addEventListener(RSVP_DONE_EVENT, onDone);
+    return () => window.removeEventListener(RSVP_DONE_EVENT, onDone);
+  }, []);
+
+  // 지정한 파트에 머무르면 잠깐 뒤 모달 노출 (파트별 1회, 지나가면 취소)
+  useEffect(() => {
+    if (modalOpen || rsvpDoneRef.current) return;
+    const hit = modalTriggers.find((t) => t.index === active);
+    if (!hit || readSeen().includes(hit.key)) return;
+    const timer = setTimeout(() => {
+      if (rsvpDoneRef.current) return;
+      try {
+        localStorage.setItem(
+          MODAL_SEEN_KEY,
+          JSON.stringify([...new Set([...readSeen(), hit.key])]),
+        );
+      } catch {}
+      setModalOpen(true);
+    }, MODAL_DELAY_MS);
+    return () => clearTimeout(timer);
+  }, [active, modalOpen, modalTriggers]);
 
   useEffect(() => {
     const c = ref.current;
@@ -80,6 +135,16 @@ export default function ScrollShell({
         {children}
       </div>
       <NavDots labels={labels} active={active} onGo={goTo} />
+      {/* 커버(첫인상)와 RSVP 파트 자체에서는 숨긴다 */}
+      <RsvpFab
+        visible={rsvpIndex >= 0 && active !== 0 && active !== rsvpIndex && !modalOpen}
+        onClick={() => goTo(rsvpIndex)}
+      />
+      <RsvpModal
+        open={modalOpen}
+        onClose={() => setModalOpen(false)}
+        variant={variant}
+      />
     </>
   );
 }

@@ -135,8 +135,14 @@ textarea:focus {
   pointer-events: none;
 }
 
-/* 라이트박스가 열려 있는 동안 사운드 토글 숨김 (닫기 × 버튼과 겹침 방지) */
-[data-lightbox-open] .soundToggleWrap {
+/* 모달이 떠 있는 동안 뒤 배경 스크롤 잠금 */
+[data-modal-open] .snapShell {
+  overflow: hidden;
+}
+
+/* 라이트박스가 열려 있는 동안 상단 사운드 토글·하단 CTA 숨김 (사진 감상 방해 방지) */
+[data-lightbox-open] .soundToggleWrap,
+[data-lightbox-open] .rsvpFabWrap {
   opacity: 0;
   pointer-events: none;
   transition: opacity 0.2s;
