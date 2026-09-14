@@ -11,7 +11,7 @@ import gfix_6 from "@/assets/photos/gallery/fix/AB_00897-.jpg";
 import gfix_7 from "@/assets/photos/gallery/fix/AB_01245-.jpg";
 import gfix_8 from "@/assets/photos/gallery/fix/AB_01340-.jpg";
 import gfix_9 from "@/assets/photos/gallery/fix/AB_01512-.jpg";
-import gfix_10 from "@/assets/photos/gallery/fix/AB_01818-crop.jpg";
+import gfix_10 from "@/assets/photos/gallery/fix/IMG_1657.jpeg";
 import gfix_11 from "@/assets/photos/gallery/fix/AB_01895-.jpg";
 import gfix_12 from "@/assets/photos/gallery/fix/AB_02167-.jpg";
 import gfix_13 from "@/assets/photos/gallery/fix/BB_00171-.jpg";
