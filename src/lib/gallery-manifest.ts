@@ -17,6 +17,7 @@ import gfix_12 from "@/assets/photos/gallery/fix/AB_02167-.jpg";
 import gfix_13 from "@/assets/photos/gallery/fix/BB_00171-.jpg";
 import gfix_14 from "@/assets/photos/gallery/fix/BB_00243-.jpg";
 import gfix_15 from "@/assets/photos/gallery/fix/BB_00323-.jpg";
+import gfix_16 from "@/assets/photos/gallery/fix/AB-00634-2.jpg";
 import g01_0 from "@/assets/photos/gallery/01/AB_00015-.jpg";
 import g01_1 from "@/assets/photos/gallery/01/AB_00393-.jpg";
 import g01_2 from "@/assets/photos/gallery/01/gallery-01.jpg";
@@ -100,4 +101,5 @@ export const GALLERY_FIXED: StaticImageData[] = [
   gfix_13,
   gfix_14,
   gfix_15,
+  gfix_16,
 ];
