@@ -1,11 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteObjects, r2Configured } from "@/lib/storage/r2";
 import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
+import { UUID_RE } from "@/lib/validation";
 
 export const runtime = "nodejs";
-
-const UUID_RE =
-  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
 
 // 인증은 middleware가 담당 (/api/admin/* 쿠키 가드)
 export async function DELETE(
