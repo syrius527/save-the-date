@@ -50,6 +50,7 @@ export default async function AdminPage() {
     day: "numeric",
     hour: "2-digit",
     minute: "2-digit",
+    hour12: false, // 24시간제 (RsvpTable과 동일)
     timeZone: "Asia/Seoul",
   });
 

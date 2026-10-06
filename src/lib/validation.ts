@@ -11,6 +11,9 @@ export const EXT_BY_MIME: Record<string, string> = {
   "image/webp": "webp",
 };
 
+export const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/;
+
 export const OBJECT_KEY_RE =
   /^guestbook\/2026\/[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}\.(jpg|png|webp)$/;
 
@@ -58,3 +61,6 @@ export const rsvpSchema = z.object({
   variant: z.enum(["family", "friend"]),
   website: z.string().max(0).optional().default(""),
 });
+
+// 관리자 수정·직접 추가용 — 출처(variant)는 서버가 정하고 honeypot은 불필요
+export const rsvpAdminSchema = rsvpSchema.omit({ variant: true, website: true });
