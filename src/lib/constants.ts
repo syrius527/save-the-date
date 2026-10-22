@@ -40,7 +40,7 @@ export interface Account {
 
 export const ACCOUNTS: { groom: Account[]; bride: Account[] } = {
   groom: [
-    { role: "신랑", name: "이동재", bank: "신한은행", num: "110-414-860183" },
+    { role: "신랑", name: "이동재", bank: "신한은행", num: "110-547-612950" },
   ],
   bride: [
     { role: "신부", name: "정래원", bank: "우리은행", num: "1002-159-756920" },
