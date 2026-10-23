@@ -4,7 +4,6 @@ import {
   createContext,
   useCallback,
   useContext,
-  useEffect,
   useRef,
   useState,
 } from "react";
@@ -22,6 +21,7 @@ const Ctx = createContext<SoundCtx>({
 });
 
 export function SoundProvider({ children }: { children: React.ReactNode }) {
+  // 기본 사운드 OFF: SOUND 버튼을 눌렀을 때만 소리를 켠다
   const [muted, setMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const mutedRef = useRef(true);
@@ -40,29 +40,6 @@ export function SoundProvider({ children }: { children: React.ReactNode }) {
       if (!next && v.paused) v.play().catch(() => {});
     }
     setMuted(next);
-  }, []);
-
-  // 기본 사운드 ON: 브라우저 자동재생 정책상 음소거로 시작해야 하므로,
-  // 첫 사용자 제스처(터치/클릭)에서 자동으로 소리를 켠다
-  useEffect(() => {
-    const unmuteOnFirstGesture = () => {
-      if (!mutedRef.current) return;
-      mutedRef.current = false;
-      const v = videoRef.current;
-      if (v) {
-        v.muted = false;
-        if (v.paused) v.play().catch(() => {});
-      }
-      setMuted(false);
-    };
-    document.addEventListener("pointerdown", unmuteOnFirstGesture, {
-      once: true,
-      capture: true,
-    });
-    return () =>
-      document.removeEventListener("pointerdown", unmuteOnFirstGesture, {
-        capture: true,
-      });
   }, []);
 
   return (
