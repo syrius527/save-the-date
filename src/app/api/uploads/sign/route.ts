@@ -6,8 +6,8 @@ import { ipHashOf } from "@/lib/request";
 
 export const runtime = "nodejs";
 
-// 시간당 IP별 서명 발급 상한 — 스토리지 스터핑 방지 (정상 하객이 닿을 일 없는 수치)
-const TICKETS_PER_HOUR = 120;
+// 시간당 IP별 서명 발급 상한 — 스토리지 스터핑 방지용. 하객 한 명이 100장 넘게 올리고 통신사 IP를 여럿이 공유하기도 해서 넉넉하게 둔다
+const TICKETS_PER_HOUR = 2000;
 
 export async function POST(req: NextRequest) {
   if (!r2Configured() || !supabaseConfigured()) {
