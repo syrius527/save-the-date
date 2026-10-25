@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { rsvpSchema } from "@/lib/validation";
 import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
-import { countRecentByIp, ipHashOf } from "@/lib/request";
+import { ipHashOf } from "@/lib/request";
 
 export const runtime = "nodejs";
 
@@ -23,14 +23,6 @@ export async function POST(req: NextRequest) {
   }
 
   const ipHash = ipHashOf(req);
-  const recent = await countRecentByIp("rsvps", ipHash, 600_000);
-  if (recent >= 5) {
-    return NextResponse.json(
-      { error: "잠시 후 다시 시도해주세요" },
-      { status: 429 },
-    );
-  }
-
   const { error } = await supabaseAdmin().from("rsvps").insert({
     side,
     attending,
