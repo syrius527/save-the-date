@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { deleteObjects, r2Configured } from "@/lib/storage/r2";
 import { supabaseAdmin, supabaseConfigured } from "@/lib/supabase/server";
+import { chunk } from "@/lib/chunk";
 
 export const runtime = "nodejs";
 
@@ -28,7 +29,9 @@ export async function GET(req: NextRequest) {
   const keys = (stale ?? []).map((t) => t.object_key);
   if (keys.length > 0) {
     if (r2Configured()) await deleteObjects(keys).catch(() => {});
-    await db.from("upload_tickets").delete().in("object_key", keys);
+    for (const part of chunk(keys, 100)) {
+      await db.from("upload_tickets").delete().in("object_key", part);
+    }
   }
 
   // keep-alive

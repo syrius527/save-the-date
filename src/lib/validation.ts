@@ -3,7 +3,6 @@ import { z } from "zod";
 export const ALLOWED_TYPES = ["image/jpeg", "image/png", "image/webp"] as const;
 export const MAX_FILE_BYTES = 25 * 1024 * 1024; // 25MB — 영상/비정상 파일 차단용 (압축 아님)
 export const SIGN_BATCH_MAX = 12; // 요청당 서명 개수. 총 장수는 무제한(배치 반복)
-export const PHOTOS_PER_ENTRY_MAX = 200; // 함수 타임아웃 보호용 상한
 
 export const EXT_BY_MIME: Record<string, string> = {
   "image/jpeg": "jpg",
@@ -45,8 +44,14 @@ export const guestbookPostSchema = z
           height: z.number().int().min(1).max(30000).nullable(),
         }),
       )
-      .max(PHOTOS_PER_ENTRY_MAX)
-      .default([]),
+      .default([])
+      // 같은 키가 중복으로 오면 첫 번째만 남긴다 (순서 유지) — 장수 상한은 없음
+      .transform((photos) => {
+        const seen = new Set<string>();
+        return photos.filter((p) =>
+          seen.has(p.key) ? false : (seen.add(p.key), true),
+        );
+      }),
   })
   .refine((v) => v.photos.length > 0 || v.message.length > 0, {
     message: "사진 또는 메시지를 남겨주세요",

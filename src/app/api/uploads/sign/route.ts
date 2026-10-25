@@ -6,9 +6,6 @@ import { ipHashOf } from "@/lib/request";
 
 export const runtime = "nodejs";
 
-// 시간당 IP별 서명 발급 상한 — 스토리지 스터핑 방지용. 하객 한 명이 100장 넘게 올리고 통신사 IP를 여럿이 공유하기도 해서 넉넉하게 둔다
-const TICKETS_PER_HOUR = 2000;
-
 export async function POST(req: NextRequest) {
   if (!r2Configured() || !supabaseConfigured()) {
     return NextResponse.json(
@@ -23,18 +20,6 @@ export async function POST(req: NextRequest) {
 
   const db = supabaseAdmin();
   const ipHash = ipHashOf(req);
-  const since = new Date(Date.now() - 3600_000).toISOString();
-  const { count } = await db
-    .from("upload_tickets")
-    .select("*", { count: "exact", head: true })
-    .eq("ip_hash", ipHash)
-    .gte("created_at", since);
-  if ((count ?? 0) + parsed.data.files.length > TICKETS_PER_HOUR) {
-    return NextResponse.json(
-      { error: "업로드가 너무 많아요. 잠시 후 다시 시도해주세요." },
-      { status: 429 },
-    );
-  }
 
   const tickets: Record<string, unknown>[] = [];
   const uploads: { key: string; url: string; publicUrl: string }[] = [];
